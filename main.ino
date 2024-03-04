@@ -5,17 +5,18 @@ LiquidCrystal_I2C lcd(0x27,20,4);
 
 int score = 0;
 int swicth = 7;
-
 int row = 0;
-
 int mon_row = 0;
 int mon_col = 16;
 
-int win = 20;
 int isLose = 0;
 int isWon = 0;
 int step_to_move = 250;
 int current_step = 0;
+
+int win = 40;
+int minimum_speed = 50;
+int decrease_per_round = 15;
 
 void setup() {
   lcd.init(); 
@@ -49,12 +50,12 @@ void process() {
   } else if (mon_col == 8 && mon_row != row) { // Reset State
     score += 1;
     mon_col = 16;
-    if (step_to_move <= 75) {
-      step_to_move = 75;
+    if (step_to_move <= minimum_speed) {
+      step_to_move = minimum_speed;
     } else {
-      step_to_move = step_to_move - 15;
+      step_to_move = step_to_move - decrease_per_round;
     }
-    
+
     mon_row = rand() % 2;
 
     if (score == win) {
