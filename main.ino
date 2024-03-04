@@ -2,23 +2,30 @@
 
 LiquidCrystal_I2C lcd(0x27,20,4);
 
-int count = 1;
+int count = 0;
+int swicth = 7;
 
 void setup() {
   lcd.init(); 
 
   lcd.backlight();
-  lcd.setCursor(3,0);
-  // lcd.print("Hello, world!");
-  // lcd.setCursor(2,1);
-  // lcd.print("Ywrobot Arduino!");
+
+  lcd.clear();
+  lcd.print("Count : " + String(count));
+
+  pinMode(swicth, INPUT);
 }
 
 void loop() {
-  delay(1000);
-  lcd.clear();
+  int value = digitalRead(swicth);
 
-  lcd.print("Count : " + String(count));
+  if (value == 0) {
+    count = count + 1;
 
-  count = count + 1;
+    lcd.clear();
+
+    lcd.print("Count : " + String(count));
+
+    delay(1000);
+  }
 }
